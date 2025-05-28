@@ -3,9 +3,6 @@ FROM node:18-alpine
 # Create app directory
 WORKDIR /usr/src/app
 
-# Create logs directory
-RUN mkdir -p logs
-
 # Copy package files
 COPY package*.json ./
 
@@ -19,8 +16,8 @@ COPY src/ ./src/
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nodejs -u 1001
 
-# Change ownership of the app directory
-RUN chown -R nodejs:nodejs /usr/src/app
+# Create logs directory and set ownership
+RUN mkdir -p logs && chown -R nodejs:nodejs /usr/src/app
 
 # Switch to non-root user
 USER nodejs
